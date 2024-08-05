@@ -7,7 +7,7 @@ import {
   Validators,
 } from "@angular/forms";
 import { Router } from "@angular/router";
-import { AuthService, IRegisterUser } from "../../services/auth.service";
+import { AuthService, RegisterUser } from "../../services/auth.service";
 import { MatCardModule } from "@angular/material/card";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";

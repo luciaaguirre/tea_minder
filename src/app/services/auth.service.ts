@@ -4,7 +4,7 @@ import { Observable, of, throwError } from "rxjs";
 import { catchError, map, switchMap } from "rxjs/operators";
 import { UserModel } from "../models/user.model";
 
-export interface IRegisterUser {
+export interface RegisterUser {
   name: string;
   password: string;
   email: string;
@@ -42,7 +42,7 @@ export class AuthService {
       );
   }
 
-  registerUser(params: IRegisterUser): Observable<UserModel> {
+  registerUser(params: RegisterUser): Observable<UserModel> {
     return this.http.post<UserModel>("/api/users", params);
   }
 
