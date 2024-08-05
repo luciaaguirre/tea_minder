@@ -1,4 +1,6 @@
 import { Routes } from "@angular/router";
+import { authGuard } from "./guards/auth.guard";
+import { isSignIn } from "./guards/is-sign-in.guard";
 
 export const APP_ROUTES: Routes = [
   {
