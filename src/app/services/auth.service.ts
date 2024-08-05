@@ -17,7 +17,7 @@ export class AuthService {
   private http: HttpClient = inject(HttpClient);
 
   get user(): UserModel | null {
-    return JSON.parse(sessionStorage.getItem("user")!) as UserModel | null;
+    return JSON.parse(sessionStorage.getItem("user")!) as unknown as UserModel;
   }
 
   constructor() {}
@@ -25,15 +25,15 @@ export class AuthService {
   login(email: string, password: string): Observable<UserModel> {
     return this.http
       .get<UserModel[]>("/api/users", {
-        params: new HttpParams().set("email", email),
+        params: new HttpParams().set("email", email).set("password", password),
       })
       .pipe(
         switchMap((response) => {
           if (response.length === 1 && response[0].password === password) {
             sessionStorage.setItem("user", JSON.stringify(response[0]));
-            return of(response[0]);
+            return of<UserModel>(response[0]);
           } else {
-            return throwError(() => new Error("Invalid email or password"));
+            return throwError(() => new Error("No existing user"));
           }
         }),
         catchError((error) =>
@@ -43,7 +43,7 @@ export class AuthService {
   }
 
   registerUser(params: RegisterUser): Observable<UserModel> {
-    return this.http.post<UserModel>("/api/users", params);
+    return this.http.post<UserModel>("/api/users", { ...params });
   }
 
   logout(): void {
