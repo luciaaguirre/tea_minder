@@ -1,10 +1,10 @@
 import {
   BrowserModule,
   DomRendererFactory2
-} from "./chunk-LAEZOKM6.js";
+} from "./chunk-KZGS4DEZ.js";
 import {
   DOCUMENT
-} from "./chunk-ISOSFC42.js";
+} from "./chunk-ZKUYKNOU.js";
 import {
   ANIMATION_MODULE_TYPE,
   ApplicationRef,
@@ -21,11 +21,11 @@ import {
   ɵɵdefineInjector,
   ɵɵdefineNgModule,
   ɵɵinject
-} from "./chunk-W3EUJSHM.js";
+} from "./chunk-UICRHIOO.js";
 import {
   __objRest,
   __spreadValues
-} from "./chunk-SXIXOCJ4.js";
+} from "./chunk-ZDOIMVJD.js";
 
 // node_modules/@angular/animations/fesm2022/animations.mjs
 var AnimationMetadataType;
@@ -45,6 +45,21 @@ var AnimationMetadataType;
   AnimationMetadataType2[AnimationMetadataType2["Stagger"] = 12] = "Stagger";
 })(AnimationMetadataType || (AnimationMetadataType = {}));
 var AUTO_STYLE = "*";
+function trigger(name, definitions) {
+  return {
+    type: AnimationMetadataType.Trigger,
+    name,
+    definitions,
+    options: {}
+  };
+}
+function animate(timings, styles = null) {
+  return {
+    type: AnimationMetadataType.Animate,
+    styles,
+    timings
+  };
+}
 function sequence(steps, options = null) {
   return {
     type: AnimationMetadataType.Sequence,
@@ -57,6 +72,22 @@ function style(tokens) {
     type: AnimationMetadataType.Style,
     styles: tokens,
     offset: null
+  };
+}
+function state(name, styles, options) {
+  return {
+    type: AnimationMetadataType.State,
+    name,
+    styles,
+    options
+  };
+}
+function transition(stateChangeExpr, steps, options = null) {
+  return {
+    type: AnimationMetadataType.Transition,
+    expr: stateChangeExpr,
+    animation: steps,
+    options
   };
 }
 var _AnimationBuilder = class _AnimationBuilder {
@@ -1110,10 +1141,10 @@ var AnimationAstBuilderVisitor = class {
         });
         stateDef.name = name;
       } else if (def.type == AnimationMetadataType.Transition) {
-        const transition = this.visitTransition(def, context);
-        queryCount += transition.queryCount;
-        depCount += transition.depCount;
-        transitions.push(transition);
+        const transition2 = this.visitTransition(def, context);
+        queryCount += transition2.queryCount;
+        depCount += transition2.depCount;
+        transitions.push(transition2);
       } else {
         context.errors.push(invalidDefinition());
       }
@@ -2353,7 +2384,7 @@ function createFallbackTransition(triggerName, states, normalizer) {
     steps: [],
     options: null
   };
-  const transition = {
+  const transition2 = {
     type: AnimationMetadataType.Transition,
     animation,
     matchers,
@@ -2361,7 +2392,7 @@ function createFallbackTransition(triggerName, states, normalizer) {
     queryCount: 0,
     depCount: 0
   };
-  return new AnimationTransitionFactory(triggerName, transition, states);
+  return new AnimationTransitionFactory(triggerName, transition2, states);
 }
 function balanceProperties(stateMap, key1, key2) {
   if (stateMap.has(key1)) {
@@ -2609,14 +2640,14 @@ var AnimationTransitionNamespace = class {
     }
   }
   _getTrigger(name) {
-    const trigger = this._triggers.get(name);
-    if (!trigger) {
+    const trigger2 = this._triggers.get(name);
+    if (!trigger2) {
       throw unregisteredTrigger(name);
     }
-    return trigger;
+    return trigger2;
   }
   trigger(element, triggerName, value, defaultToFallback = true) {
-    const trigger = this._getTrigger(triggerName);
+    const trigger2 = this._getTrigger(triggerName);
     const player = new TransitionAnimationPlayer(this.id, triggerName, element);
     let triggersWithStates = this._engine.statesByElement.get(element);
     if (!triggersWithStates) {
@@ -2638,8 +2669,8 @@ var AnimationTransitionNamespace = class {
     if (!isRemoval && fromState.value === toState.value) {
       if (!objEquals(fromState.params, toState.params)) {
         const errors = [];
-        const fromStyles = trigger.matchStyles(fromState.value, fromState.params, errors);
-        const toStyles = trigger.matchStyles(toState.value, toState.params, errors);
+        const fromStyles = trigger2.matchStyles(fromState.value, fromState.params, errors);
+        const toStyles = trigger2.matchStyles(toState.value, toState.params, errors);
         if (errors.length) {
           this._engine.reportError(errors);
         } else {
@@ -2657,19 +2688,19 @@ var AnimationTransitionNamespace = class {
         player2.destroy();
       }
     });
-    let transition = trigger.matchTransition(fromState.value, toState.value, element, toState.params);
+    let transition2 = trigger2.matchTransition(fromState.value, toState.value, element, toState.params);
     let isFallbackTransition = false;
-    if (!transition) {
+    if (!transition2) {
       if (!defaultToFallback)
         return;
-      transition = trigger.fallbackTransition;
+      transition2 = trigger2.fallbackTransition;
       isFallbackTransition = true;
     }
     this._engine.totalQueuedPlayers++;
     this._queue.push({
       element,
       triggerName,
-      transition,
+      transition: transition2,
       fromState,
       toState,
       player,
@@ -2735,8 +2766,8 @@ var AnimationTransitionNamespace = class {
     const previousTriggersValues = /* @__PURE__ */ new Map();
     if (triggerStates) {
       const players = [];
-      triggerStates.forEach((state, triggerName) => {
-        previousTriggersValues.set(triggerName, state.value);
+      triggerStates.forEach((state2, triggerName) => {
+        previousTriggersValues.set(triggerName, state2.value);
         if (this._triggers.has(triggerName)) {
           const player = this.trigger(element, triggerName, VOID_VALUE, defaultToFallback);
           if (player) {
@@ -2764,8 +2795,8 @@ var AnimationTransitionNamespace = class {
         if (visitedTriggers.has(triggerName))
           return;
         visitedTriggers.add(triggerName);
-        const trigger = this._triggers.get(triggerName);
-        const transition = trigger.fallbackTransition;
+        const trigger2 = this._triggers.get(triggerName);
+        const transition2 = trigger2.fallbackTransition;
         const fromState = elementStates.get(triggerName) || DEFAULT_STATE_VALUE;
         const toState = new StateValue(VOID_VALUE);
         const player = new TransitionAnimationPlayer(this.id, triggerName, element);
@@ -2773,7 +2804,7 @@ var AnimationTransitionNamespace = class {
         this._queue.push({
           element,
           triggerName,
-          transition,
+          transition: transition2,
           fromState,
           toState,
           player,
@@ -2941,9 +2972,9 @@ var TransitionAnimationEngine = class {
     }
     return ns;
   }
-  registerTrigger(namespaceId, name, trigger) {
+  registerTrigger(namespaceId, name, trigger2) {
     let ns = this._namespaceLookup[namespaceId];
-    if (ns && ns.register(name, trigger)) {
+    if (ns && ns.register(name, trigger2)) {
       this.totalAnimations++;
     }
   }
@@ -3242,9 +3273,9 @@ var TransitionAnimationEngine = class {
               const previousValue = details.previousTriggersValues.get(entry.triggerName);
               const triggersWithStates = this.statesByElement.get(entry.element);
               if (triggersWithStates && triggersWithStates.has(entry.triggerName)) {
-                const state = triggersWithStates.get(entry.triggerName);
-                state.value = previousValue;
-                triggersWithStates.set(entry.triggerName, state);
+                const state2 = triggersWithStates.get(entry.triggerName);
+                state2.value = previousValue;
+                triggersWithStates.set(entry.triggerName, state2);
               }
             }
             player.destroy();
@@ -3809,8 +3840,8 @@ var AnimationEngine = class {
   }
   registerTrigger(componentId, namespaceId, hostElement, name, metadata) {
     const cacheKey = componentId + "-" + name;
-    let trigger = this._triggerCache[cacheKey];
-    if (!trigger) {
+    let trigger2 = this._triggerCache[cacheKey];
+    if (!trigger2) {
       const errors = [];
       const warnings = [];
       const ast = buildAnimationAst(this._driver, metadata, errors, warnings);
@@ -3820,10 +3851,10 @@ var AnimationEngine = class {
       if (warnings.length) {
         warnTriggerBuild(name, warnings);
       }
-      trigger = buildTrigger(name, ast, this._normalizer);
-      this._triggerCache[cacheKey] = trigger;
+      trigger2 = buildTrigger(name, ast, this._normalizer);
+      this._triggerCache[cacheKey] = trigger2;
     }
-    this._transitionEngine.registerTrigger(namespaceId, name, trigger);
+    this._transitionEngine.registerTrigger(namespaceId, name, trigger2);
   }
   register(namespaceId, hostElement) {
     this._transitionEngine.register(namespaceId, hostElement);
@@ -4296,9 +4327,9 @@ function resolveElementFromTarget(target) {
 }
 function parseTriggerCallbackName(triggerName) {
   const dotIndex = triggerName.indexOf(".");
-  const trigger = triggerName.substring(0, dotIndex);
+  const trigger2 = triggerName.substring(0, dotIndex);
   const phase = triggerName.slice(dotIndex + 1);
-  return [trigger, phase];
+  return [trigger2, phase];
 }
 var AnimationRendererFactory = class {
   constructor(delegate, engine, _zone) {
@@ -4334,11 +4365,11 @@ var AnimationRendererFactory = class {
     const namespaceId = type.id + "-" + this._currentId;
     this._currentId++;
     this.engine.register(namespaceId, hostElement);
-    const registerTrigger = (trigger) => {
-      if (Array.isArray(trigger)) {
-        trigger.forEach(registerTrigger);
+    const registerTrigger = (trigger2) => {
+      if (Array.isArray(trigger2)) {
+        trigger2.forEach(registerTrigger);
       } else {
-        this.engine.registerTrigger(componentId, namespaceId, hostElement, trigger.name, trigger);
+        this.engine.registerTrigger(componentId, namespaceId, hostElement, trigger2.name, trigger2);
       }
     };
     const animationTriggers = type.data["animation"];
@@ -4537,6 +4568,11 @@ function provideNoopAnimations() {
 }
 
 export {
+  trigger,
+  animate,
+  style,
+  state,
+  transition,
   InjectableAnimationEngine,
   BrowserAnimationsModule,
   provideAnimations,
@@ -4566,4 +4602,4 @@ export {
    * License: MIT
    *)
 */
-//# sourceMappingURL=chunk-HZG3OG3Z.js.map
+//# sourceMappingURL=chunk-TPLA7FZA.js.map

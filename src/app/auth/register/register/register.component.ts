@@ -7,7 +7,7 @@ import {
   Validators,
 } from "@angular/forms";
 import { Router } from "@angular/router";
-import { AuthService, RegisterUser } from "../../services/auth.service";
+import { AuthService, RegisterUser } from "../../../services/auth.service";
 import { MatCardModule } from "@angular/material/card";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
@@ -30,10 +30,12 @@ import { MatButtonModule } from "@angular/material/button";
         <mat-card>
           <mat-card-content>
             <mat-form-field>
-              <mat-label>Name</mat-label>
-              <input matInput formControlName="name" />
-              <mat-error *ngIf="registerForm.get('name')?.hasError('required')">
-                Name is required
+              <mat-label>Username</mat-label>
+              <input matInput formControlName="username" />
+              <mat-error
+                *ngIf="registerForm.get('username')?.hasError('required')"
+              >
+                Username is required
               </mat-error>
             </mat-form-field>
 
@@ -116,7 +118,7 @@ export class RegisterComponent implements OnInit {
     private router: Router
   ) {
     this.registerForm = this.fb.group({
-      name: ["", Validators.required],
+      username: ["", Validators.required],
       email: ["", [Validators.required, Validators.email]],
       password: ["", [Validators.required, Validators.minLength(1)]],
     });
@@ -129,8 +131,8 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    const { name, email, password } = this.registerForm.value;
-    this.authService.registerUser({ name, email, password }).subscribe({
+    const { username, email, password } = this.registerForm.value;
+    this.authService.registerUser({ username, email, password }).subscribe({
       next: () => this.router.navigate(["/"]),
       error: (err: any) => (this.errorMessage = err.message),
     });

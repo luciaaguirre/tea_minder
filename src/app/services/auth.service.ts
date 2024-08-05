@@ -5,7 +5,7 @@ import { catchError, map, switchMap } from "rxjs/operators";
 import { UserModel } from "../models/user.model";
 
 export interface RegisterUser {
-  name: string;
+  username: string;
   password: string;
   email: string;
 }
