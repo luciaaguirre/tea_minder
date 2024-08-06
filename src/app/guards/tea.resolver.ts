@@ -22,13 +22,10 @@ export const TeaResolver: ResolveFn<TeaModel> = (
     return teaService.getTea(id).pipe(
       tap((tea) => {
         if (!tea) {
-          snackBar.open(`Error loading tea: No tea with id ${id}`, "Close", {
-            duration: 3000,
-          });
+          snackBar.open("Error loading tea, no tea with id ${id}");
         }
       })
     );
   }
-
   return of<TeaModel>(teaSelected);
 };
