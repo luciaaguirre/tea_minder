@@ -1,3 +1,7 @@
 export class UserModel {
-  constructor(public email: string, public password: string) {}
+  constructor(
+    public id: string,
+    public email: string,
+    public password: string
+  ) {}
 }

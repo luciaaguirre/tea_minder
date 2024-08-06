@@ -33,28 +33,18 @@ export class TeaService {
     }
 
     return this.http.get<TeaModel[]>("/api/teas", {
-      params: new HttpParams().set("userId", userId),
+      params: new HttpParams().set("userId", this.authService.user?.id),
     });
   }
 
   getTea(id: string): Observable<TeaModel> {
-    const userId = this.getUserId();
-    if (!userId) {
-      return throwError(() => new Error("User not authenticated"));
-    }
-
     return this.http
-      .get<TeaModel[]>("/api/teas", {
-        params: new HttpParams().set("userId", userId).set("id", id),
+      .get<TeaModel[]>(`/api/teas`, {
+        params: new HttpParams()
+          .set("userId", this.authService.user.id)
+          .set("id", id),
       })
-      .pipe(
-        map((response) => response[0]),
-        tap((tea) => {
-          if (!tea) {
-            throw new Error("Tea not found");
-          }
-        })
-      );
+      .pipe(map((response) => response[0]));
   }
 
   setTea(tea: TeaModel): void {
@@ -63,14 +53,9 @@ export class TeaService {
   }
 
   addTea(param: TeaModel): Observable<TeaModel> {
-    const userId = this.getUserId();
-    if (!userId) {
-      return throwError(() => new Error("User not authenticated"));
-    }
-
     return this.http.post<TeaModel>("/api/teas", {
       ...param,
-      userId,
+      userId: this.authService.user?.id,
     });
   }
 
@@ -79,13 +64,10 @@ export class TeaService {
   }
 
   deleteTea(param: TeaModel): Observable<void> {
-    const userId = this.getUserId();
-    if (!userId) {
-      return throwError(() => new Error("User not authenticated"));
-    }
-
     return this.http.delete<void>(`/api/teas/${param.id}`, {
-      params: new HttpParams().set("userId", userId).set("id", param.id),
+      params: new HttpParams()
+        .set("userId", this.authService.user.id)
+        .set("id", param.id),
     });
   }
 }
