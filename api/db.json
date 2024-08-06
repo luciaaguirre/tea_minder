@@ -17,6 +17,12 @@
       "name": "User_3",
       "email": "user_3@teaminder.com",
       "password": "12345678"
+    },
+    {
+      "id": "d4bd",
+      "username": "lucia",
+      "email": "lucia@lucia",
+      "password": "123456"
     }
   ],
   "teas": [

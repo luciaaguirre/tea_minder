@@ -1,6 +1,13 @@
 import { Routes } from "@angular/router";
+import { AuthComponent } from "./auth/auth.component";
+import { LoginComponent } from "./auth/login/login/login.component";
+import { RegisterComponent } from "./auth/register/register/register.component";
+import { HomeComponent } from "./pages/home.component";
 import { authGuard } from "./guards/auth.guard";
+import { TeaResolver } from "./guards/tea.resolver";
 import { isSignIn } from "./guards/is-sign-in.guard";
+import { TeaListComponent } from "./pages/tea-list/tea-list.component";
+import { TeaDetailComponent } from "./pages/tea-detail/tea-detail.component";
 
 export const APP_ROUTES: Routes = [
   {
@@ -29,8 +36,23 @@ export const APP_ROUTES: Routes = [
   },
   {
     path: "auth",
-    loadChildren: () => import("./auth/auth.routes").then((m) => m.routes),
+    component: AuthComponent,
+    children: [
+      {
+        path: "login",
+        component: LoginComponent,
+      },
+      {
+        path: "register",
+        component: RegisterComponent,
+      },
+    ],
     canActivate: [isSignIn],
+  },
+  {
+    path: "**",
+    redirectTo: "teas",
+    pathMatch: "full",
   },
   {
     path: "**",
