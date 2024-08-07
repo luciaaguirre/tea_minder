@@ -1,5 +1,15 @@
 import { bootstrapApplication } from "@angular/platform-browser";
-import { appConfig } from "./app/app.config";
 import { AppComponent } from "./app/app.component";
+import { provideRouter } from "@angular/router";
+import { APP_ROUTES } from "./app/app.routes";
+import { CustomHttpInterceptor } from "./app/interceptors/custom-http.interceptor";
+import { provideHttpClient, withInterceptors } from "@angular/common/http";
+import { provideAnimations } from "@angular/platform-browser/animations";
 
-bootstrapApplication(AppComponent, appConfig).catch((err) => console.log(err));
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideRouter(APP_ROUTES),
+    provideHttpClient(withInterceptors([CustomHttpInterceptor])),
+    provideAnimations(),
+  ],
+});
